@@ -14,52 +14,21 @@ public class Main {
         vertx.deployVerticle(new MainVerticle());
 
         CallService.actionService = new ActionService() {
+
+            @Override
+            public void home(RoutingContext rs) {
+                System.out.println("HOME");
+                rs.response().end(Json.encodeToBuffer("WELCOME HOME"));
+            }
+
             @Override
             public void test(RoutingContext rs) {
-                System.out.println(rs.queryParam("test"));
-                rs.response().putHeader("content-type", "application/json");
-                rs.response().end(Json.encodeToBuffer("test"));
-                System.out.println("dsffsd");
-
-            }
-
-            @Override
-            public void test1(RoutingContext rs) {
-                rs.response().putHeader("content-type", "application/json");
-                rs.response().end(Json.encodeToBuffer("test1"));
-            }
-
-            @Override
-            public void t(RoutingContext rs) {
-                rs.response().putHeader("content-type", "application/json");
-                rs.response().end(Json.encodeToBuffer("t"));
-            }
-
-            @Override
-            public void gfds(RoutingContext rs) {
-                rs.response().putHeader("content-type", "application/json");
-                rs.response().end(Json.encodeToBuffer("gfds"));
-            }
-
-            @Override
-            public void testTR(RoutingContext rs) {
-                rs.response().putHeader("content-type", "application/json");
-                rs.response().end(Json.encodeToBuffer("testTR"));
-            }
-
-            @Override
-            public void f(RoutingContext rs) {
-
-            }
-
-            @Override
-            public void fnyau(RoutingContext rs) {
-
-            }
-
-            @Override
-            public void fsdf(RoutingContext rs) {
-
+                System.out.println("TEST");
+                if (rs.queryParam("password").isEmpty()) {
+                    rs.response().end(Json.encodeToBuffer("FAIL"));
+                } else {
+                    rs.response().end(Json.encodeToBuffer("SUCCESS"));
+                }
             }
         };
 
